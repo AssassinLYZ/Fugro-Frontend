@@ -27,6 +27,7 @@ const InforBoard: React.FC<InforBoardProps> = ({
 
   const hidePanel = () => {
     setIsShowPrevious(false);
+    // clear currentPositions to release memory
     setCurrentPositions([]);
     toast.current?.info("Hide data Succcess!", {
       duration: 3000,
@@ -49,6 +50,7 @@ const InforBoard: React.FC<InforBoardProps> = ({
 
   return (
     <>
+      {/* mobile view */}
       <div className={styles["mobile-operator"]}>
         {!isShowPanel && (
           <div
@@ -67,6 +69,7 @@ const InforBoard: React.FC<InforBoardProps> = ({
           </div>
         )}
       </div>
+
       {isShowPanel && (
         <div className={styles["board-info"]}>
           <div className={styles["board-items"]}>
@@ -108,14 +111,15 @@ const InforBoard: React.FC<InforBoardProps> = ({
 
           <div className={styles["board-items"]}>
             <p className={styles["show-btn"]} onClick={showPanel}>
-              Show Previous Positions
+              {!isShowPrevious ? "Show" : ""} Previous Positions
             </p>
           </div>
 
+          {/* position table */}
           {isShowPrevious && (
             <div className={styles["previous-box"]}>
               <p className={styles["clear-btn"]} onClick={hidePanel}>
-                Clear
+                Hide
               </p>
               <table className={styles["previous-positions-table"]}>
                 <thead>

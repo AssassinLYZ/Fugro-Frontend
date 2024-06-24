@@ -26,8 +26,7 @@ const Home: React.FC = () => {
   } = useStore();
   const wsClientRef = useRef<WebSocketClient | null>(null);
   useEffect(() => {
-    removeLocalStorage(POSITION_KEY.LOCALKEY);
-
+    // connect to backend to receive data
     if (!wsClientRef.current) {
       wsClientRef.current = new WebSocketClient(config.websocketUrl!);
       wsClientRef.current.onMessage((message: string) => {
@@ -47,12 +46,15 @@ const Home: React.FC = () => {
     }
     return () => {
       if (wsClientRef.current) {
+        //  clear localstorge & disconnect websocket
+        removeLocalStorage(POSITION_KEY.LOCALKEY);
         wsClientRef.current?.close();
       }
     };
   }, []);
 
   useEffect(() => {
+    // caculate the average point
     setPositionAverage((prev) => {
       if (total > 0) {
         return {

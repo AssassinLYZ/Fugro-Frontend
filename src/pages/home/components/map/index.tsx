@@ -49,6 +49,7 @@ const Map: React.FC = () => {
   };
 
   useEffect(() => {
+    // show previous marker position
     if (isShowPrevious && map.current) {
       if (previousMarkers.current.length == 0) {
         currentPositions.forEach((coord) => {
@@ -66,6 +67,8 @@ const Map: React.FC = () => {
         previousMarkers.current.push(marker);
       }
     }
+
+    // change current/average position
     currentMarker.current!.setLngLat([
       currentPosition.lng,
       currentPosition.lat,
