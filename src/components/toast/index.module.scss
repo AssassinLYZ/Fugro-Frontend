@@ -1,0 +1,54 @@
+.toast {
+  width: fit-content;
+  color: green;
+  position: fixed;
+  z-index: 999;
+  display: flex;
+  left: 50%;
+  right: 0%;
+  bottom: 10%;
+  justify-content: center;
+  flex-direction: column;
+  user-select: none;
+  transform: translate(-50%, 0);
+  background-color: var(--board-color);
+}
+
+.container {
+  display: flex;
+  font-size: 14px;
+  border-radius: 14px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: 1s ease;
+  animation: toastAnimation 0.2s ease-out;
+
+  &:hover {
+    transform: scale(1.02);
+  }
+
+  .delete {
+    margin-left: 20px;
+    color: red;
+  }
+}
+
+@keyframes toastAnimation {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.success {
+  color: rgb(131, 255, 131);
+}
+
+.error {
+  color: red;
+}

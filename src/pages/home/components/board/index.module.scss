@@ -1,0 +1,136 @@
+.mobile-operator {
+  display: none;
+  color: white;
+
+  .btn {
+    position: absolute;
+    background: var(--board-color);
+    height: 50px;
+    width: 50px;
+    text-align: center;
+    line-height: 50px;
+    z-index: 1000;
+  }
+}
+
+@media screen and (max-width: 770px) {
+  .mobile-operator {
+    display: block;
+
+    .minus {
+      left: 310px;
+    }
+
+    .plus {
+      left: 20px;
+    }
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .minus {
+    left: calc(120px + 50%) !important
+  }
+
+  .plus {
+    left: calc(50% - 170px) !important
+  }
+}
+
+.board-info {
+  position: absolute;
+  top: 0px;
+  left: 20px;
+  background-color: var(--board-color);
+  width: 30%;
+  color: white;
+  text-align: left;
+  padding: 30px 0px 10px;
+  font-size: 14px;
+  min-width: 340px;
+  z-index: 999;
+
+  @media screen and (max-width: 480px) {
+    left: calc(50% - 170px);
+  }
+
+  .icon {
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+
+  .icon-current {
+    background-color: rgb(228, 20, 20);
+  }
+
+  .icon-average {
+    background-color: rgb(62, 228, 20);
+  }
+
+  .title {
+    display: flex;
+    align-items: center;
+    padding: 0 40px;
+  }
+
+  .content {
+    margin: 10px 0px;
+    display: flex;
+    padding: 0 40px;
+    font-size: 18px;
+    font-weight: 800;
+  }
+
+  .content-item {
+    width: 50%;
+  }
+
+  .divider {
+    margin-top: 20px;
+    height: 1px;
+    background-color: white;
+  }
+
+  .show-btn {
+    text-align: center;
+    margin: 5px;
+    cursor: pointer;
+  }
+
+  .previous-box {
+    padding: 0px 10px;
+    border-radius: 5px;
+    overflow-y: scroll;
+    max-height: 40vh;
+  }
+
+  .clear-btn {
+    position: absolute;
+    top: 200px;
+    right: 10px;
+    cursor: pointer;
+    color: red;
+    text-decoration: underline;
+    margin-bottom: 5px;
+    font-size: 15px;
+  }
+
+  .previous-positions-table {
+    width: 100%;
+  }
+
+  .previous-positions-table th,
+  .previous-positions-table td {
+    padding: 8px;
+    text-align: center;
+  }
+
+  .table-header {
+    background-color: #000000;
+    position: sticky;
+    top: 0;
+  }
+
+}
