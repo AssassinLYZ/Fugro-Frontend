@@ -1,9 +1,9 @@
 type MessageHandler = (message: string) => void;
-
 class WebSocketClient {
     private url: string;
     private socket: WebSocket | null = null;
     private messageHandler: MessageHandler | null = null;
+    private openHandler: (() => void) | null = null; // New property for onOpen handler
 
     constructor(url: string) {
         this.url = url;
@@ -14,7 +14,9 @@ class WebSocketClient {
         this.socket = new WebSocket(this.url);
 
         this.socket.onopen = () => {
-            console.log('WebSocket connection established.');
+            if (this.openHandler) {
+                this.openHandler(); // Call onOpen handler if set
+            }
         };
 
         this.socket.onmessage = (event: MessageEvent) => {
@@ -44,6 +46,11 @@ class WebSocketClient {
 
     public onMessage(handler: MessageHandler) {
         this.messageHandler = handler;
+    }
+
+    // Method to set onOpen handler
+    public onOpen(handler: () => void) {
+        this.openHandler = handler;
     }
 
     public close() {

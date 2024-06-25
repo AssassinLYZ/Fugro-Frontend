@@ -98,14 +98,14 @@ const InforBoard: React.FC<InforBoardProps> = ({ Info, total }) => {
           <p className={styles["divider"]}></p>
 
           <div className={styles["board-items"]}>
-            <p className={styles["show-btn"]} onClick={showPanel}>
+            <div className={styles["show-btn"]} onClick={showPanel}>
               {!isShowPrevious ? (
                 "Start"
               ) : (
                 <p className={styles["record-hint"]}></p>
               )}{" "}
               Recording
-            </p>
+            </div>
           </div>
 
           {/* position table */}

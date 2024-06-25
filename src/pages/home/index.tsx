@@ -1,6 +1,6 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "./index.module.scss";
-import ToastContainer from "@/components/toast";
+import ToastContainer, { toast } from "@/components/toast";
 import InforBoard from "./components/board";
 import Map from "./components/map";
 import WebSocketClient from "@/lib/apis/WebSocketClient";
@@ -18,11 +18,23 @@ const Home: React.FC = () => {
     setCurrentPositions,
     isShowPrevious,
   } = useStore();
+
+  const [isloading, setIsLoading] = useState(true);
   const wsClientRef = useRef<WebSocketClient | null>(null);
+
   useEffect(() => {
     // connect to backend to receive data
     if (!wsClientRef.current) {
       wsClientRef.current = new WebSocketClient(config.websocketUrl!);
+
+      wsClientRef.current.onOpen(() => {
+        setIsLoading(false);
+        toast.current?.info("Server Connected!", {
+          duration: 3000,
+          type: "success",
+        });
+      });
+
       wsClientRef.current.onMessage((message: string) => {
         try {
           const data = JSON.parse(message);
@@ -69,6 +81,7 @@ const Home: React.FC = () => {
 
   return (
     <div className={styles.home}>
+      {isloading ? <p className={styles["loading"]}>Connecting ... </p> : ""}
       <InforBoard Info={currentPosition} total={total} />
       <Map />
       <ToastContainer />

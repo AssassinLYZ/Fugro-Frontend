@@ -3,7 +3,7 @@ import mapboxgl, { Map as MapboxMap, Marker as MapboxMarker } from "mapbox-gl";
 import config from "@/config";
 import type { Coordinate } from "@/types";
 import useStore from "@/store/postions";
-import { toast } from "@/components/toast";
+
 mapboxgl.accessToken = config.mapboxToken;
 
 const Map: React.FC = () => {
