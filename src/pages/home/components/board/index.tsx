@@ -19,21 +19,25 @@ const InforBoard: React.FC<InforBoardProps> = ({ Info, total }) => {
   } = useStore();
   const [isShowPanel, setIsShowPanel] = useState(true);
 
-  const hidePanel = () => {
-    setIsShowPrevious(false);
-    setCurrentPositions([]);
-    toast.current?.info("Recording Stopped!", {
-      duration: 3000,
-      type: "success",
-    });
+  const hidePrevious = () => {
+    if (isShowPrevious) {
+      setIsShowPrevious(false);
+      setCurrentPositions([]);
+      toast.current?.info("Recording Stopped!", {
+        duration: 3000,
+        type: "success",
+      });
+    }
   };
 
-  const showPanel = () => {
-    setIsShowPrevious(true);
-    toast.current?.info("Positions are being Recorded!", {
-      duration: 3000,
-      type: "success",
-    });
+  const showPrevious = () => {
+    if (!isShowPrevious) {
+      setIsShowPrevious(true);
+      toast.current?.info("Positions are being Recorded!", {
+        duration: 3000,
+        type: "success",
+      });
+    }
   };
 
   return (
@@ -98,7 +102,7 @@ const InforBoard: React.FC<InforBoardProps> = ({ Info, total }) => {
           <p className={styles["divider"]}></p>
 
           <div className={styles["board-items"]}>
-            <div className={styles["show-btn"]} onClick={showPanel}>
+            <div className={styles["show-btn"]} onClick={showPrevious}>
               {!isShowPrevious ? (
                 "Start"
               ) : (
@@ -112,7 +116,7 @@ const InforBoard: React.FC<InforBoardProps> = ({ Info, total }) => {
           {isShowPrevious && (
             <>
               <div className={styles["previous-box"]}>
-                <p className={styles["clear-btn"]} onClick={hidePanel}>
+                <p className={styles["clear-btn"]} onClick={hidePrevious}>
                   Stop
                 </p>
                 <table className={styles["previous-positions-table"]}>

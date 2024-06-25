@@ -5,5 +5,5 @@ const config = {
     positionsClusterMember: 10,
     mapBoxStyle: "mapbox://styles/yliu0141/cl4ozqtzo000915qh7e5vhdll"
 };
-console.log(import.meta.env)
+
 export default config;
