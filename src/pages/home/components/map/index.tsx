@@ -73,7 +73,7 @@ const Map: React.FC = () => {
       positionAverage.lng,
       positionAverage.lat,
     ]);
-  }, [currentPosition]);
+  }, [positionAverage]);
 
   useEffect(() => {
     if (!isShowPrevious) {
