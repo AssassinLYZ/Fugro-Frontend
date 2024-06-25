@@ -15,26 +15,25 @@ const InforBoard: React.FC<InforBoardProps> = ({ Info, total }) => {
     currentPositions,
     setIsShowPrevious,
     positionAverage,
+    setCurrentPositions,
   } = useStore();
   const [isShowPanel, setIsShowPanel] = useState(true);
 
   const hidePanel = () => {
     setIsShowPrevious(false);
-    toast.current?.info("Hide data Succcess!", {
+    setCurrentPositions([]);
+    toast.current?.info("Recording Stopped!", {
       duration: 3000,
       type: "success",
     });
   };
 
   const showPanel = () => {
-    if (currentPositions.length == 0) {
-      toast.current?.info("No previous Data", {
-        duration: 3000,
-        type: "error",
-      });
-    } else {
-      setIsShowPrevious(true);
-    }
+    setIsShowPrevious(true);
+    toast.current?.info("Positions are being Recorded!", {
+      duration: 3000,
+      type: "success",
+    });
   };
 
   return (
@@ -100,35 +99,45 @@ const InforBoard: React.FC<InforBoardProps> = ({ Info, total }) => {
 
           <div className={styles["board-items"]}>
             <p className={styles["show-btn"]} onClick={showPanel}>
-              {!isShowPrevious ? "Show" : ""} Previous Positions
+              {!isShowPrevious ? (
+                "Start"
+              ) : (
+                <p className={styles["record-hint"]}></p>
+              )}{" "}
+              Recording
             </p>
           </div>
 
           {/* position table */}
           {isShowPrevious && (
-            <div className={styles["previous-box"]}>
-              <p className={styles["clear-btn"]} onClick={hidePanel}>
-                Hide
-              </p>
-              <table className={styles["previous-positions-table"]}>
-                <thead>
-                  <tr>
-                    <th className={styles["table-header"]}>Longitude</th>
-                    <th className={styles["table-header"]}>Latitude</th>
-                    <th className={styles["table-header"]}>TimeStamp</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {currentPositions.map((item, index) => (
-                    <tr key={index}>
-                      <td>{item.lng}</td>
-                      <td>{item.lat}</td>
-                      <td>{item.timeStamp}</td>
+            <>
+              <div className={styles["previous-box"]}>
+                <p className={styles["clear-btn"]} onClick={hidePanel}>
+                  Stop
+                </p>
+                <table className={styles["previous-positions-table"]}>
+                  <thead>
+                    <tr>
+                      <th className={styles["table-header"]}>Longitude</th>
+                      <th className={styles["table-header"]}>Latitude</th>
+                      <th className={styles["table-header"]}>TimeStamp</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                  </thead>
+                  <tbody>
+                    {currentPositions.map((item, index) => (
+                      <tr key={index}>
+                        <td>{item.lng}</td>
+                        <td>{item.lat}</td>
+                        <td>{item.timeStamp}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <p className={styles["record-num"]}>
+                Number of Recorded: <span>{currentPositions.length}</span>
+              </p>
+            </>
           )}
         </div>
       )}

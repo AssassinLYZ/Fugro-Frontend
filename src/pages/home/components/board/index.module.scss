@@ -62,11 +62,11 @@
   }
 
   .icon-current {
-    background-color: rgb(228, 20, 20);
+    background-color: blue;
   }
 
   .icon-average {
-    background-color: rgb(62, 228, 20);
+    background-color: orange;
   }
 
   .title {
@@ -94,9 +94,21 @@
   }
 
   .show-btn {
+    display: flex;
     text-align: center;
+    justify-content: center;
     margin: 5px;
     cursor: pointer;
+    align-items: center;
+    gap: 10px;
+
+    .record-hint {
+      left: 160px;
+      height: 10px;
+      width: 10px;
+      border-radius: 50%;
+      background-color: var(--success)
+    }
   }
 
   .previous-box {
@@ -131,6 +143,16 @@
     background-color: #000000;
     position: sticky;
     top: 0;
+  }
+
+  .record-num {
+    text-align: center;
+    margin-top: 20px;
+
+    span {
+      font-weight: 800;
+      color: var(--success)
+    }
   }
 
 }

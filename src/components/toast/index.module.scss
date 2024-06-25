@@ -1,6 +1,6 @@
 .toast {
   width: fit-content;
-  color: green;
+  color: var(--success);
   position: fixed;
   z-index: 999;
   display: flex;

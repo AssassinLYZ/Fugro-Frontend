@@ -16,6 +16,7 @@ const Home: React.FC = () => {
     setTotal,
     setCurrentPosition,
     setCurrentPositions,
+    isShowPrevious,
   } = useStore();
   const wsClientRef = useRef<WebSocketClient | null>(null);
   useEffect(() => {
@@ -57,10 +58,12 @@ const Home: React.FC = () => {
         };
       });
 
-      setCurrentPositions((prevPositions) => [
-        currentPosition,
-        ...prevPositions,
-      ]);
+      if (isShowPrevious) {
+        setCurrentPositions((prevPositions) => [
+          currentPosition,
+          ...prevPositions,
+        ]);
+      }
     }
   }, [total]);
 

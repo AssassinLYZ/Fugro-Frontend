@@ -28,13 +28,13 @@ const Map: React.FC = () => {
     map.current.doubleClickZoom.disable();
     map.current.boxZoom.disable();
 
-    currentMarker.current = new mapboxgl.Marker({ color: "red" })
+    currentMarker.current = new mapboxgl.Marker({ color: "blue" })
       .setLngLat([0, 0])
       .addTo(map.current);
     const currentMarkerElement = currentMarker.current.getElement();
     currentMarkerElement.style.zIndex = "900";
 
-    averageMarker.current = new mapboxgl.Marker({ color: "green" })
+    averageMarker.current = new mapboxgl.Marker({ color: "orange" })
       .setLngLat([0, 0])
       .addTo(map.current);
     averageMarker.current.getElement().style.zIndex = "800";
@@ -57,10 +57,6 @@ const Map: React.FC = () => {
             const marker = addMarker("grey", coord)!;
             previousMarkers.current.push(marker);
           }
-        });
-        toast.current?.info("Positions showed Succcess!", {
-          duration: 3000,
-          type: "success",
         });
       } else {
         const marker = addMarker("grey", currentPosition)!;
