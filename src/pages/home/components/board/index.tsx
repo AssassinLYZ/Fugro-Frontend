@@ -1,34 +1,25 @@
 import React, { useState } from "react";
 import styles from "./index.module.scss";
 import type { Coordinate } from "@/types";
-import { POSITION_KEY } from "@/types/constant";
 import useStore from "@/store/postions";
 
 import { toast } from "@/components/toast";
-import { getFromLocalStorage } from "@/lib/utils";
 interface InforBoardProps {
   Info: Coordinate;
   total: number;
-  currentPositions: Coordinate[];
 }
 
-const InforBoard: React.FC<InforBoardProps> = ({
-  Info,
-  total,
-  currentPositions,
-}) => {
+const InforBoard: React.FC<InforBoardProps> = ({ Info, total }) => {
   const {
     isShowPrevious,
+    currentPositions,
     setIsShowPrevious,
     positionAverage,
-    setCurrentPositions,
   } = useStore();
   const [isShowPanel, setIsShowPanel] = useState(true);
 
   const hidePanel = () => {
     setIsShowPrevious(false);
-    // clear currentPositions to release memory
-    setCurrentPositions([]);
     toast.current?.info("Hide data Succcess!", {
       duration: 3000,
       type: "success",
@@ -36,15 +27,13 @@ const InforBoard: React.FC<InforBoardProps> = ({
   };
 
   const showPanel = () => {
-    const positions = getFromLocalStorage(POSITION_KEY.LOCALKEY);
-    if (positions && (positions as Coordinate[]).length > 0) {
-      setCurrentPositions(positions as Coordinate[]);
-      setIsShowPrevious(true);
-    } else {
+    if (currentPositions.length == 0) {
       toast.current?.info("No previous Data", {
         duration: 3000,
         type: "error",
       });
+    } else {
+      setIsShowPrevious(true);
     }
   };
 

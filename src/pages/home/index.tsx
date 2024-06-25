@@ -6,23 +6,16 @@ import Map from "./components/map";
 import WebSocketClient from "@/lib/apis/WebSocketClient";
 import config from "@/config";
 import useStore from "@/store/postions";
-import {
-  formatTime,
-  pushToLocalStorage,
-  removeLocalStorage,
-} from "@/lib/utils";
-import { POSITION_KEY } from "@/types/constant";
+import { formatTime } from "@/lib/utils";
 
 const Home: React.FC = () => {
   const {
-    currentPositions,
     currentPosition,
     total,
     setPositionAverage,
     setTotal,
     setCurrentPosition,
     setCurrentPositions,
-    isShowPrevious,
   } = useStore();
   const wsClientRef = useRef<WebSocketClient | null>(null);
   useEffect(() => {
@@ -37,8 +30,6 @@ const Home: React.FC = () => {
           setTotal((prevTotal) => {
             return prevTotal + 1;
           });
-
-          pushToLocalStorage(POSITION_KEY.LOCALKEY, formatedPosition);
         } catch (err) {
           console.error("Error parsing message", err);
         }
@@ -46,8 +37,7 @@ const Home: React.FC = () => {
     }
     return () => {
       if (wsClientRef.current) {
-        //  clear localstorge & disconnect websocket
-        removeLocalStorage(POSITION_KEY.LOCALKEY);
+        // disconnect websocket
         wsClientRef.current?.close();
       }
     };
@@ -55,8 +45,8 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     // caculate the average point
-    setPositionAverage((prev) => {
-      if (total > 0) {
+    if (total > 0) {
+      setPositionAverage((prev) => {
         return {
           lat: Number(
             ((prev.lat * (total - 1) + currentPosition.lat) / total).toFixed(4)
@@ -65,25 +55,18 @@ const Home: React.FC = () => {
             ((prev.lng * (total - 1) + currentPosition.lng) / total).toFixed(4)
           ),
         };
-      }
-      return { lat: 0, lng: 0 };
-    });
+      });
 
-    if (isShowPrevious) {
       setCurrentPositions((prevPositions) => [
         currentPosition,
         ...prevPositions,
       ]);
     }
-  }, [total, currentPosition]);
+  }, [total]);
 
   return (
     <div className={styles.home}>
-      <InforBoard
-        Info={currentPosition}
-        total={total}
-        currentPositions={currentPositions}
-      />
+      <InforBoard Info={currentPosition} total={total} />
       <Map />
       <ToastContainer />
     </div>
